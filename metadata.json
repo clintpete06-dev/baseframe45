@@ -1,0 +1,6 @@
+{
+  "name": "Baseframe Shoes & More",
+  "description": "Sleek, modern, and luxurious e-commerce platform for curated premium men's footwear, featuring Nike, Adidas, Gucci, Balenciaga, and more.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

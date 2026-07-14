@@ -1,0 +1,437 @@
+import { Product } from '../types';
+
+export const PRODUCTS: Product[] = [
+  {
+    id: 'nike-air-max-90-silver',
+    brand: 'Nike',
+    name: 'Air Max 90 "Platinum Chrome"',
+    price: 180,
+    rating: 4.8,
+    reviewCount: 142,
+    images: [
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1549298916-f52d724204b4?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'A futuristic re-imagining of the iconic Air Max 90. Features sleek metallic silver overlays on an breathable mesh collar, accompanied by the legendary visible Air cushioning for ultimate response.',
+    sizes: [8, 8.5, 9, 9.5, 10, 10.5, 11, 12],
+    colors: ['Platinum Silver', 'Obsidian Black', 'Solar Red'],
+    colorsHex: ['#e5e7eb', '#1f2937', '#f87171'],
+    category: 'Sneakers',
+    isNewArrival: true,
+    isTrending: true,
+    isFeatured: true,
+    shoeCode: 'BF-NKE-AM90-01',
+    specifications: {
+      'Sole': 'Visible Max Air Sole Unit, Premium Rubber Grip',
+      'Upper Material': 'Mesh base with metallic silver leather overlays',
+      'Lining': 'Breathable custom moisture-wicking textile',
+      'Country of Origin': 'Vietnam'
+    },
+    reviews: [
+      { id: 'r1', user: 'Marcus Vance', rating: 5, date: '2026-04-12', comment: 'Absolutely spectacular shoe. The metallic finish shines beautifully and is super comfortable.' },
+      { id: 'r2', user: 'Julian K.', rating: 4, date: '2026-03-29', comment: 'Clean, futuristic colorway. Sizing is true to size and feels very lightweight.' }
+    ]
+  },
+  {
+    id: 'nike-air-force-1-luxe',
+    brand: 'Nike',
+    name: 'Air Force 1 Premium "Obsidian"',
+    price: 160,
+    rating: 4.9,
+    reviewCount: 310,
+    images: [
+      'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1549298916-f52d724204b4?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'Premium brushed leather updates a legendary court silhouette. Complete with understated branding details and an enhanced memory foam sockliner for refined luxury.',
+    sizes: [7, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13],
+    colors: ['Alabaster White', 'Midnight Cobalt', 'Soot Black'],
+    colorsHex: ['#fbfbfb', '#1d3557', '#111827'],
+    category: 'Sneakers',
+    isBestSeller: true,
+    shoeCode: 'BF-NKE-AF1-LUXE',
+    specifications: {
+      'Sole': 'Stitched rubber cupsole with premium tread pattern',
+      'Upper Material': 'Full-grain Italian calfskin leather',
+      'Lining': 'Satin-feel synthetic microfiber',
+      'Country of Origin': 'Vietnam'
+    },
+    reviews: [
+      { id: 'r3', user: 'Tyler Green', rating: 5, date: '2026-05-10', comment: 'Outstanding leather quality. Much better than standard options. A true everyday luxury sneaker.' }
+    ]
+  },
+  {
+    id: 'adidas-ultraboost-metallic',
+    brand: 'Adidas',
+    name: 'Ultraboost 1.0 "Silver Bullet"',
+    price: 210,
+    rating: 4.7,
+    reviewCount: 95,
+    images: [
+      'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'The ultimate fusion of energy return and streetwear luxury. Designed with a primeknit upper utilizing premium recycled materials and responsive boost technology.',
+    sizes: [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12],
+    colors: ['Silver Metallic', 'Carbon Core Black', 'Cloud White'],
+    colorsHex: ['#d1d5db', '#111827', '#fafafa'],
+    category: 'Sneakers',
+    isTrending: true,
+    isFeatured: true,
+    shoeCode: 'BF-ADI-UB10-SLV',
+    specifications: {
+      'Sole': 'Continental™ Better Rubber Outsole, Full-length Boost midsole',
+      'Upper Material': 'Primeknit containing 50% Parley Ocean Plastic',
+      'Lining': 'Plush moisture-absorbing mesh',
+      'Country of Origin': 'China'
+    },
+    reviews: [
+      { id: 'r4', user: 'David Chen', rating: 5, date: '2026-04-18', comment: 'Walking on clouds. The silver colorway pairs beautifully with black trousers. Elite!' }
+    ]
+  },
+  {
+    id: 'adidas-superstar-retro',
+    brand: 'Adidas',
+    name: 'Superstar LX "Chalk Vintage"',
+    price: 130,
+    originalPrice: 150,
+    rating: 4.6,
+    reviewCount: 78,
+    images: [
+      'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'Premium heritage reissue featuring upgraded construction. Real leather wraps the entirety of the silhouette, paired with a subtle silver leaf lettering finish.',
+    sizes: [8, 9, 10, 11, 12],
+    colors: ['Chalk Shell', 'Gold Accent Black'],
+    colorsHex: ['#f4f4f5', '#1e293b'],
+    category: 'Sneakers',
+    isSale: true,
+    discount: 15,
+    shoeCode: 'BF-ADI-SS-RE',
+    specifications: {
+      'Sole': 'Hardened vulcanized cupsole wrapper',
+      'Upper Material': 'Delicate pebble-grain leather',
+      'Lining': 'Soft genuine pigskin leather',
+      'Country of Origin': 'Indonesia'
+    },
+    reviews: [
+      { id: 'r5', user: 'Kenji T.', rating: 4, date: '2026-03-12', comment: 'Super nice construction, fits slightly wide as classic super stars do.' }
+    ]
+  },
+  {
+    id: 'gucci-horsebit-loafer',
+    brand: 'Gucci',
+    name: 'Horsebit Leather Loafer "1953"',
+    price: 920,
+    rating: 4.9,
+    reviewCount: 88,
+    images: [
+      'https://images.unsplash.com/photo-1614252329309-4d3f5f377e8e?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1549298916-f52d724204b4?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'The ultimate symbol of luxury Italian footwear. First introduced in 1953, this classic loafer retains its iconic slim visual shape, accented with the legendary silver horsebit metal buckle detail.',
+    sizes: [7, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12],
+    colors: ['Onyx Black Saffiano', 'Rich Mahogany Brown'],
+    colorsHex: ['#0f172a', '#451a03'],
+    category: 'Luxury',
+    isFeatured: true,
+    isBestSeller: true,
+    shoeCode: 'BF-GUC-HB-53',
+    specifications: {
+      'Sole': 'Genuine leather outsole with high-durability stacked heel',
+      'Upper Material': 'Hand-burnished ultra-premium Italian calfskin',
+      'Lining': 'Full fine kidskin glove lining',
+      'Country of Origin': 'Italy'
+    },
+    reviews: [
+      { id: 'r6', user: 'Sebastian Sterling', rating: 5, date: '2026-05-15', comment: 'The epitome of class. Pairs perfectly with tailored suits or linen trousers.' },
+      { id: 'r7', user: 'Arthur Pendelton', rating: 5, date: '2026-04-30', comment: 'Absolute perfection. Traditional luxury leather crafting at its highest standard.' }
+    ]
+  },
+  {
+    id: 'gucci-ace-sneaker',
+    brand: 'Gucci',
+    name: 'Ace Metallic Interlocking Sneaker',
+    price: 850,
+    rating: 4.8,
+    reviewCount: 65,
+    images: [
+      'https://images.unsplash.com/photo-1549298916-f52d724204b4?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'A luxurious low-top silhouette featuring subtle debossed interlocking logo patterns. Highlights of silver-toned metallic heel caps create a distinct but clean upscale design.',
+    sizes: [8, 8.5, 9, 9.5, 10, 10.5, 11, 12],
+    colors: ['Chalk White & Silver', 'Nero Black'],
+    colorsHex: ['#ffffff', '#1e293b'],
+    category: 'Luxury',
+    isNewArrival: true,
+    shoeCode: 'BF-GUC-ACE-02',
+    specifications: {
+      'Sole': 'Custom-branded flat rubber luxury cupsole',
+      'Upper Material': 'Supreme buttery leather with silver detail inserts',
+      'Lining': 'Breathable pure-soft leather',
+      'Country of Origin': 'Italy'
+    },
+    reviews: [
+      { id: 'r8', user: 'Liam Mercer', rating: 5, date: '2026-05-24', comment: 'Minimal, understated elegance. The silver accent is beautiful.' }
+    ]
+  },
+  {
+    id: 'new-balance-990-classic',
+    brand: 'New Balance',
+    name: '990v6 "Heritage Castlerock"',
+    price: 200,
+    rating: 4.9,
+    reviewCount: 280,
+    images: [
+      'https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'The masterclass of balance between supreme cushioning and architectural style. Meticulously handcrafted with pigskin suede overlays and FuelCell foam technology.',
+    sizes: [8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13],
+    colors: ['Silver Grey', 'Obsidian Navy', 'Chalk Bone'],
+    colorsHex: ['#9ca3af', '#1e3a8a', '#f5f5f4'],
+    category: 'Sneakers',
+    isBestSeller: true,
+    isTrending: true,
+    shoeCode: 'BF-NB-990V6-GR',
+    specifications: {
+      'Sole': 'FuelCell midsole compound with ENCAP stability cushion core',
+      'Upper Material': 'Pigskin suede trimming with mesh underlays',
+      'Lining': 'Technical soft textile fabric',
+      'Country of Origin': 'United States'
+    },
+    reviews: [
+      { id: 'r9', user: 'Ethan Cole', rating: 5, date: '2026-05-18', comment: 'Unbeatable comfort. Best sneaker on the market, castlerock grey matches everything.' }
+    ]
+  },
+  {
+    id: 'balenciaga-triple-s-silver',
+    brand: 'Balenciaga',
+    name: 'Triple S "Silver-Metallic" Edition',
+    price: 1150,
+    rating: 4.7,
+    reviewCount: 115,
+    images: [
+      'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'An iconic powerhouse of high fashion footwear design. Features the signature triple-stacked sole construct in beautiful chrome detailing and silver metallic overlays.',
+    sizes: [8, 9, 10, 11, 12],
+    colors: ['Liquid Platinum Chrome', 'Carbon Dark Grey'],
+    colorsHex: ['#cbd5e1', '#374151'],
+    category: 'Luxury',
+    isTrending: true,
+    isFeatured: true,
+    shoeCode: 'BF-BAL-TS-SLR',
+    specifications: {
+      'Sole': 'Complex 3-layered high tech specialized outer sole',
+      'Upper Material': 'High strength double-woven mesh with liquid metallic leather panels',
+      'Lining': 'Cushioned elastic breathable performance collar',
+      'Country of Origin': 'Italy'
+    },
+    reviews: [
+      { id: 'r10', user: 'Christian S.', rating: 5, date: '2026-05-02', comment: 'A pure work of abstract modern fashion art. Heavy but stands out in the best possible way.' }
+    ]
+  },
+  {
+    id: 'timberland-6inch-custom',
+    brand: 'Timberland',
+    name: 'Premium 6" Boot "Sterling Silver"',
+    price: 240,
+    rating: 4.8,
+    reviewCount: 194,
+    images: [
+      'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1638247025967-b4e38f787b76?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'The standard classic waterproof boot, accented with silver-engraved rustproof hardware and bespoke silver-metallic laces for the ultimate cold weather luxury statement.',
+    sizes: [8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13],
+    colors: ['Classic Gold-Wheat', 'Stealth Charcoal Black'],
+    colorsHex: ['#d97706', '#1e293b'],
+    category: 'Boots',
+    isBestSeller: true,
+    shoeCode: 'BF-TIM-6IN-SLR',
+    specifications: {
+      'Sole': 'Direct-attach, seam-sealed waterproof rubber lug sole',
+      'Upper Material': 'Premium full-grain waterproof nubuck leather',
+      'Lining': '200g PrimaLoft® thermal insulation inside',
+      'Country of Origin': 'Dominican Republic'
+    },
+    reviews: [
+      { id: 'r11', user: 'Dustin Miller', rating: 5, date: '2026-04-14', comment: 'Keeps my feet perfectly dry. The silver hardware gives a neat luxury touch.' }
+    ]
+  },
+  {
+    id: 'clarks-wallabee-tan',
+    brand: 'Clarks',
+    name: 'Wallabee Boot "Horween Cast"',
+    price: 195,
+    rating: 4.8,
+    reviewCount: 112,
+    images: [
+      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'Constructed from rich, hand-treated Horween Suede, featuring a clean moccasin profile silhouette and the signature premium natural crepe rubber sole.',
+    sizes: [7, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12],
+    colors: ['Oat Suede', 'Dark Chestnut Maple'],
+    colorsHex: ['#e4e4e7', '#7c2d12'],
+    category: 'Casual',
+    isSale: true,
+    originalPrice: 225,
+    discount: 13,
+    shoeCode: 'BF-CLR-WB-TAN',
+    specifications: {
+      'Sole': 'Bespoke natural soft plantation crepe core rubber',
+      'Upper Material': 'Supreme Horween calfskin suede',
+      'Lining': 'Refined unlined breathable construction',
+      'Country of Origin': 'Portugal'
+    },
+    reviews: [
+      { id: 'r12', user: 'Graham P.', rating: 5, date: '2026-05-19', comment: 'Incredible slouchy fit. Crepe sole makes it extremely supportive to spend all day on foot.' }
+    ]
+  },
+  {
+    id: 'vans-old-skool-lx',
+    brand: 'Vans',
+    name: 'Old Skool LX "Silver Lining"',
+    price: 95,
+    rating: 4.7,
+    reviewCount: 220,
+    images: [
+      'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'A premium-tier rendition of the legendary skate classic. Stitched with heavier canvas, full grain leather lining accents, and unique metallic eyelets.',
+    sizes: [8, 8.5, 9, 9.5, 10, 10.5, 11, 12],
+    colors: ['Coal Suede Black', 'Vintage Off-White'],
+    colorsHex: ['#111827', '#fafafa'],
+    category: 'Sneakers',
+    shoeCode: 'BF-VAN-OS-LX',
+    specifications: {
+      'Sole': 'Hardened signature waffle vulcanized rubber outsole',
+      'Upper Material': 'Heavy-duty 14oz military-grade canvas with suede trim',
+      'Lining': 'Full grain leather heel lining',
+      'Country of Origin': 'Costa Rica'
+    },
+    reviews: [
+      { id: 'r13', user: 'Lucas Vance', rating: 4, date: '2026-05-04', comment: 'Much headier build quality compared to regular Old Skool. Looks fantastic.' }
+    ]
+  },
+  {
+    id: 'louis-vuitton-riviera',
+    brand: 'Louis Vuitton',
+    name: 'Riviera Trainer "Aviation Silver"',
+    price: 1250,
+    rating: 4.9,
+    reviewCount: 42,
+    images: [
+      'https://images.unsplash.com/photo-1549298916-f52d724204b4?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'Handcrafted luxury sport trainer. Elaborately built with fine monogram premium embossed leather panels, matching solid brass hardware finished in high-polish sterling silver coating.',
+    sizes: [8, 9, 10, 11, 12],
+    colors: ['Stardust Alabaster White', 'Midnight Monogram Dark'],
+    colorsHex: ['#f4f4f5', '#1e293b'],
+    category: 'Luxury',
+    isNewArrival: true,
+    isFeatured: true,
+    shoeCode: 'BF-LV-RIVA-SLR',
+    specifications: {
+      'Sole': 'Anatomically designed luxurious rubber outsole',
+      'Upper Material': 'Embossed monogram elite calfskin & suede',
+      'Lining': 'Soft organic cotton terry loop comfort framing',
+      'Country of Origin': 'France'
+    },
+    reviews: [
+      { id: 'r14', user: 'Oliver Belmont', rating: 5, date: '2026-05-22', comment: 'Breathtaking craftsmanship. The monogram embossment is beautifully aligned.' }
+    ]
+  },
+  {
+    id: 'puma-suede-vintage',
+    brand: 'Puma',
+    name: 'Suede Vintage "Crimson Platinum"',
+    price: 110,
+    rating: 4.6,
+    reviewCount: 104,
+    images: [
+      'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'An archival reissue of the 1968 classic. Constructed from long-haired high suede texture, accompanied by metallic silver-foiled logo marks along the outer quarters.',
+    sizes: [8, 8.5, 9, 9.5, 10, 10.5, 11, 12],
+    colors: ['Crimson Scarlet Suede', 'Stealth Charcoal'],
+    colorsHex: ['#dc2626', '#4b5563'],
+    category: 'Sneakers',
+    isSale: true,
+    originalPrice: 130,
+    discount: 15,
+    shoeCode: 'BF-PMA-SD-68',
+    specifications: {
+      'Sole': 'Textured premium retro rubber sole wrap',
+      'Upper Material': 'Suede leather',
+      'Lining': 'Synthetic cushion-lined collar',
+      'Country of Origin': 'China'
+    },
+    reviews: [
+      { id: 'r15', user: 'Leo Hayes', rating: 5, date: '2026-04-20', comment: 'Stunning archive look. Suede is super soft to touch.' }
+    ]
+  },
+  {
+    id: 'converse-chuck-70-lux',
+    brand: 'Converse',
+    name: 'Chuck 70 Vintage Canvas High',
+    price: 90,
+    rating: 4.8,
+    reviewCount: 340,
+    images: [
+      'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=1000&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1000&auto=format&fit=crop&q=80'
+    ],
+    description: 'Constructed from extra-thick custom canvas and glossy off-white foxing, featuring enhanced cushioned OrthoLite insoles for everyday luxury movement.',
+    sizes: [6, 7, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13],
+    colors: ['Egret Off-White', 'Anthracite Black'],
+    colorsHex: ['#f4f4f5', '#1e293b'],
+    category: 'Sneakers',
+    shoeCode: 'BF-CON-C70-VNT',
+    specifications: {
+      'Sole': 'Upgraded vulcanized thick-walled rubber',
+      'Upper Material': '12oz high-durability premium heavy cotton canvas',
+      'Lining': 'Breathable mesh wrapped insole layer',
+      'Country of Origin': 'Vietnam'
+    },
+    reviews: [
+      { id: 'r16', user: 'Xavier N.', rating: 5, date: '2026-03-31', comment: 'Classic look with premium feel. Much chunkier and durable than normal chucks.' }
+    ]
+  }
+];
+
+export const BRANDS = [
+  { name: 'Nike', slogan: 'Only the Best of Athletic Innovation', bannerUrl: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'Adidas', slogan: 'Bespoke Sports Design & Precision Ergonomics', bannerUrl: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'Gucci', slogan: 'Pure Masterful High Fashion Crafted in Italy', bannerUrl: 'https://images.unsplash.com/photo-1614252329309-4d3f5f377e8e?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'New Balance', slogan: 'Architectural Style Meets Unrivaled Support', bannerUrl: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'Balenciaga', slogan: 'Radical High-End Modernism & Volume Shapes', bannerUrl: 'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'Timberland', slogan: 'Brave the Elements in Premium Sterling Craft', bannerUrl: 'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'Clarks', slogan: 'The Original Moccasin Profile & Unlined Suede', bannerUrl: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'Vans', slogan: 'Vanguard Street Culture & Vulcanized Classics', bannerUrl: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'Louis Vuitton', slogan: 'Ultimate Parisian Haute Couture Heritage', bannerUrl: 'https://images.unsplash.com/photo-1549298916-f52d724204b4?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'Puma', slogan: 'Athletic Vintage Design with Sleek Side Stripes', bannerUrl: 'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=1600&auto=format&fit=crop&q=80&blur=2' },
+  { name: 'Converse', slogan: 'Universal Retro High Tops with Infinite Appeal', bannerUrl: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1600&auto=format&fit=crop&q=80&blur=2' }
+];
