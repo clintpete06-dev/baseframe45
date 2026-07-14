@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
+import { useAuth } from "./lib/AuthContext";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import BrandShowcase from "./components/BrandShowcase";
@@ -18,17 +19,9 @@ import { BRANDS } from "./data/products";
 import { Compass, Send, MapPin, ArrowRight } from "lucide-react";
 
 export default function App() {
-  const [currentPath, setCurrentPath] = useState("");
+  const { firebaseUser, isLoading: authLoading } = useAuth();
 
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem("baseframe_auth") === "true";
-  });
-  const [userEmail, setUserEmail] = useState<string | null>(() => {
-    return localStorage.getItem("baseframe_user_email");
-  });
-  const [userId, setUserId] = useState<string | null>(() => {
-    return localStorage.getItem("baseframe_user_id");
-  });
+  const [currentPath, setCurrentPath] = useState("");
 
   const [filters, setFilters] = useState<ProductFilter>({
     brands: [],
@@ -49,6 +42,11 @@ export default function App() {
   const [contactMessage, setContactMessage] = useState("");
   const [contactSuccess, setContactSuccess] = useState(false);
 
+  // Derived auth state from Firebase
+  const isAuthenticated = !!firebaseUser;
+  const userEmail = firebaseUser?.email ?? null;
+  const userId = firebaseUser?.uid ?? null;
+
   // Convex queries
   const products = useQuery(api.products.list) ?? [];
   const cartData = useQuery(
@@ -66,9 +64,7 @@ export default function App() {
   const removeCartItem = useMutation(api.cart.removeItem);
   const clearCartMutation = useMutation(api.cart.clearCart);
   const toggleWishlist = useMutation(api.wishlist.toggle);
-  const registerUser = useMutation(api.auth.register);
-  const loginUser = useMutation(api.auth.login);
-  const loginAsGuest = useMutation(api.auth.loginAsGuest);
+  const syncFirebaseUser = useMutation(api.auth.syncFirebaseUser);
   const createOrder = useMutation(api.orders.create);
 
   // Memoize wishlist product IDs
@@ -101,18 +97,16 @@ export default function App() {
     return () => window.removeEventListener("hashchange", handleHash);
   }, []);
 
-  // Persist auth to localStorage
+  // Sync Firebase user to Convex when they log in
   useEffect(() => {
-    if (isAuthenticated && userEmail && userId) {
-      localStorage.setItem("baseframe_auth", "true");
-      localStorage.setItem("baseframe_user_email", userEmail);
-      localStorage.setItem("baseframe_user_id", userId);
-    } else {
-      localStorage.removeItem("baseframe_auth");
-      localStorage.removeItem("baseframe_user_email");
-      localStorage.removeItem("baseframe_user_id");
+    if (firebaseUser) {
+      syncFirebaseUser({
+        firebaseUid: firebaseUser.uid,
+        email: firebaseUser.email ?? "",
+        fullName: firebaseUser.displayName ?? undefined,
+      });
     }
-  }, [isAuthenticated, userEmail, userId]);
+  }, [firebaseUser, syncFirebaseUser]);
 
   const handleNavigate = useCallback((path: string) => {
     window.location.hash = `#/${path}`;
@@ -176,28 +170,8 @@ export default function App() {
     [userId, toggleWishlist]
   );
 
-  const handleLogin = useCallback(
-    async (email: string) => {
-      const result = await loginAsGuest({ email });
-      if (result.success) {
-        setIsAuthenticated(true);
-        setUserEmail(email);
-        setUserId(result.userId);
-      }
-      setIsAuthOpen(false);
-    },
-    [loginAsGuest]
-  );
-
-  const handleLogout = useCallback(() => {
-    setIsAuthenticated(false);
-    setUserEmail(null);
-    setUserId(null);
-    localStorage.removeItem("baseframe_auth");
-    localStorage.removeItem("baseframe_user_email");
-    localStorage.removeItem("baseframe_user_id");
-    setIsAuthOpen(false);
-  }, []);
+  // Login/logout are now handled by AuthContext
+  // The AuthModal will call useAuth().login/loginWithGoogle/register directly
 
   // Filter products from Convex
   const filteredProducts = useMemo(() => {
@@ -680,10 +654,6 @@ export default function App() {
       <AuthModal
         isOpen={isAuthOpen}
         onClose={() => setIsAuthOpen(false)}
-        isAuthenticated={isAuthenticated}
-        userEmail={userEmail}
-        onLogin={handleLogin}
-        onLogout={handleLogout}
       />
 
       <Footer onNavigate={handleNavigate} />

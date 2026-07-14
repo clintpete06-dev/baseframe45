@@ -37,8 +37,9 @@ export default defineSchema({
     fullName: v.optional(v.string()),
     username: v.optional(v.string()),
     passwordHash: v.optional(v.string()),
+    firebaseUid: v.optional(v.string()),
     xpPoints: v.optional(v.number()),
-  }).index("by_email", ["email"]),
+  }).index("by_email", ["email"]).index("by_firebaseUid", ["firebaseUid"]),
 
   cartItems: defineTable({
     userId: v.string(),
