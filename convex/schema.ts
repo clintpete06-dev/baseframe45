@@ -97,4 +97,30 @@ export default defineSchema({
   newsletterSubscribers: defineTable({
     email: v.string(),
   }).index("by_email", ["email"]),
+
+  paymentTransactions: defineTable({
+    reference: v.string(),
+    amount: v.number(),
+    currency: v.string(),
+    userId: v.string(),
+    email: v.string(),
+    status: v.union(
+      v.literal("success"),
+      v.literal("failed"),
+      v.literal("abandoned")
+    ),
+    metadata: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_reference", ["reference"])
+    .index("by_user", ["userId"]),
+
+  productVideos: defineTable({
+    productId: v.string(),
+    muxAssetId: v.string(),
+    muxPlaybackId: v.string(),
+    title: v.optional(v.string()),
+    duration: v.optional(v.number()),
+    createdAt: v.number(),
+  }).index("by_product", ["productId"]),
 });

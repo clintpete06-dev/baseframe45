@@ -649,6 +649,8 @@ export default function App() {
         onUpdateQty={handleUpdateCartQty}
         onRemoveItem={handleRemoveCartItem}
         onClearCart={handleClearCart}
+        userEmail={userEmail}
+        userId={userId}
       />
 
       <AuthModal

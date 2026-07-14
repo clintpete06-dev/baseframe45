@@ -17,6 +17,7 @@ export default defineConfig(() => {
           manualChunks: {
             'firebase': ['firebase/app', 'firebase/auth'],
             'convex': ['convex/react'],
+            'mux': ['@mux/mux-player-react'],
             'vendor': ['react', 'react-dom'],
           },
         },

@@ -4,8 +4,9 @@
  */
 
 import React, { useState } from 'react';
-import { X, Trash2, Plus, Minus, ShoppingBag, CreditCard, ShieldCheck, Ticket, Sparkles, AlertCircle } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ShoppingBag, CreditCard, ShieldCheck, Ticket, Sparkles, AlertCircle, Lock } from 'lucide-react';
 import { Product } from '../types';
+import { openPaystackCheckout, PaystackTransaction } from '../lib/paystack';
 
 type CartEntry = {
   _id: string;
@@ -23,6 +24,9 @@ interface CartDrawerProps {
   onUpdateQty: (id: string, qty: number) => void;
   onRemoveItem: (id: string) => void;
   onClearCart: () => void;
+  onOrderComplete?: (orderId: string) => void;
+  userEmail?: string | null;
+  userId?: string | null;
 }
 
 export default function CartDrawer({
@@ -31,7 +35,10 @@ export default function CartDrawer({
   cart,
   onUpdateQty,
   onRemoveItem,
-  onClearCart
+  onClearCart,
+  onOrderComplete,
+  userEmail,
+  userId
 }: CartDrawerProps) {
   // Navigation tabs inside drawer: 'cart' | 'checkout' | 'success'
   const [activeStep, setActiveStep] = useState<'cart' | 'checkout' | 'success'>('cart');
@@ -45,11 +52,9 @@ export default function CartDrawer({
   const [shippingAddress, setShippingAddress] = useState('');
   const [cityField, setCityField] = useState('');
   const [zipField, setZipField] = useState('');
-  const [cardHolder, setCardHolder] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCVV, setCardCVV] = useState('');
   const [isSimulatingOrder, setIsSimulatingOrder] = useState(false);
+  const [paymentError, setPaymentError] = useState('');
+  const [lastOrderRef, setLastOrderRef] = useState('');
 
   if (!isOpen) return null;
 
@@ -77,20 +82,47 @@ export default function CartDrawer({
     }
   };
 
-  // Perform checkout action
+  // Perform checkout action with Paystack
   const handleCheckoutSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!fullName || !shippingAddress || !cardNumber || !cardCVV) {
-      alert('Kindly fulfill all secure attributes.');
+    if (!fullName || !shippingAddress) {
+      alert('Kindly fulfill all shipping attributes.');
       return;
     }
+    if (!userEmail || !userId) {
+      alert('Authentication required for payment.');
+      return;
+    }
+    if (finalTotalSum <= 0) {
+      alert('Cart is empty or invalid total.');
+      return;
+    }
+
     setIsSimulatingOrder(true);
-    // Simulate high-tier secure transaction protocol delay
-    setTimeout(() => {
-      setIsSimulatingOrder(false);
-      setActiveStep('success');
-      onClearCart();
-    }, 2800);
+    setPaymentError('');
+
+    openPaystackCheckout({
+      email: userEmail,
+      amount: finalTotalSum,
+      currency: 'NGN',
+      userId,
+      cartItems: cart.map((item) => ({
+        name: `${item.product?.brand ?? ''} ${item.product?.name ?? ''}`,
+        quantity: item.quantity,
+        price: item.product?.price ?? 0,
+      })),
+      onSuccess(_transaction: PaystackTransaction) {
+        setLastOrderRef(_transaction.reference);
+        setIsSimulatingOrder(false);
+        setActiveStep('success');
+        onOrderComplete?.(_transaction.reference);
+        onClearCart();
+      },
+      onClose() {
+        setIsSimulatingOrder(false);
+        setPaymentError('Payment was cancelled. Your cart is still intact.');
+      },
+    });
   };
 
   return (
@@ -332,81 +364,34 @@ export default function CartDrawer({
               {/* Secure Payment section */}
               <div className="space-y-4 pt-2">
                 <h4 className="text-[10px] font-bold tracking-widest text-luxury-gray-400 uppercase font-mono border-b border-luxury-gray-100 pb-1.5">
-                  2. Secure Vault Payment Check
+                  2. Secure Payment via Paystack
                 </h4>
 
-                <div>
-                  <label className="text-[9px] font-bold tracking-wider text-luxury-gray-400 uppercase font-mono">Cardholder Signature</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="CLINT PETE"
-                    value={cardHolder}
-                    onChange={(e) => setCardHolder(e.target.value)}
-                    className="mt-1 h-10 w-full rounded-lg border border-luxury-gray-200 bg-white px-3 text-xs text-black uppercase outline-none focus:border-black font-mono"
-                  />
+                <div className="rounded-xl border border-luxury-gray-200 bg-luxury-gray-50/50 p-4 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Lock className="h-3.5 w-3.5 text-green-600" />
+                    <span className="text-[10px] font-bold tracking-wider text-luxury-gray-600 uppercase font-mono">
+                      256-bit TLS Encrypted Checkout
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-luxury-gray-500 leading-relaxed">
+                    You will be redirected to Paystack's secure payment page to complete your purchase. 
+                    Card, bank transfer, and USSD options are available.
+                  </p>
                 </div>
 
-                <div>
-                  <label className="text-[9px] font-bold tracking-wider text-luxury-gray-400 uppercase font-mono">Encrypted Card Number</label>
-                  <div className="relative mt-1">
-                    <input
-                      type="text"
-                      required
-                      maxLength={19}
-                      placeholder="4000 1234 5678 9010"
-                      value={cardNumber}
-                      onChange={(e) => {
-                        // Apply basic visual space chunks
-                        let val = e.target.value.replace(/\D/g, '');
-                        let chunks = val.match(/.{1,4}/g);
-                        setCardNumber(chunks ? chunks.join(' ') : val);
-                      }}
-                      className="h-10 w-full rounded-lg border border-luxury-gray-200 bg-white pl-9 pr-3 text-xs text-black outline-none focus:border-black font-mono"
-                    />
-                    <CreditCard className="absolute left-3.5 top-3 h-4.5 w-4.5 text-luxury-gray-450" />
+                {paymentError && (
+                  <div className="rounded-xl border border-red-200 bg-red-50 p-3 flex items-start gap-2">
+                    <AlertCircle className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
+                    <p className="text-[10px] text-red-600 font-semibold">{paymentError}</p>
                   </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3.5">
-                  <div>
-                    <label className="text-[9px] font-bold tracking-wider text-luxury-gray-400 uppercase font-mono">Expiration</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="12/28"
-                      maxLength={5}
-                      value={cardExpiry}
-                      onChange={(e) => {
-                        let val = e.target.value.replace(/\D/g, '');
-                        if (val.length > 2) {
-                          setCardExpiry(val.slice(0, 2) + '/' + val.slice(2, 4));
-                        } else {
-                          setCardExpiry(val);
-                        }
-                      }}
-                      className="mt-1 h-10 w-full rounded-lg border border-luxury-gray-200 bg-white px-3 text-xs text-black outline-none focus:border-black font-mono"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[9px] font-bold tracking-wider text-luxury-gray-400 uppercase font-mono">CVV Guard</label>
-                    <input
-                      type="password"
-                      required
-                      maxLength={4}
-                      placeholder="•••"
-                      value={cardCVV}
-                      onChange={(e) => setCardCVV(e.target.value.replace(/\D/g, ''))}
-                      className="mt-1 h-10 w-full rounded-lg border border-luxury-gray-200 bg-white px-3 text-xs text-black outline-none focus:border-black font-mono"
-                    />
-                  </div>
-                </div>
+                )}
               </div>
 
               {/* TLS Status Disclaimer */}
               <div className="flex items-center gap-2 rounded-xl border border-luxury-gray-200 bg-luxury-gray-100/50 p-3.5 text-[9px] text-luxury-gray-500 font-mono uppercase tracking-wide">
                 <ShieldCheck className="h-4.5 w-4.5 text-black" />
-                <span>Encrypted secure socket layer connections active</span>
+                <span>Payments powered by Paystack - PCI DSS compliant</span>
               </div>
 
               <div className="pt-2 flex gap-3">
@@ -426,11 +411,12 @@ export default function CartDrawer({
                     <>
                       {/* Animated Spinner scale */}
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                      <span>Verifying Card...</span>
+                      <span>Initiating Paystack...</span>
                     </>
                   ) : (
                     <>
-                      <span>Sign Purchase Agreement</span>
+                      <Lock className="h-4 w-4" />
+                      <span>Pay with Paystack</span>
                     </>
                   )}
                 </button>
@@ -473,11 +459,11 @@ export default function CartDrawer({
                 </div>
                 <div className="flex justify-between border-t border-luxury-gray-200/40 pt-3">
                   <div>
-                    <p className="text-[10px] text-luxury-gray-400 uppercase font-semibold">Manifest SKU Identifier</p>
-                    <p className="font-semibold text-black">BF-SHP-MANIFEST_8902AA</p>
+                    <p className="text-[10px] text-luxury-gray-400 uppercase font-semibold">Payment Reference</p>
+                    <p className="font-semibold text-black">{lastOrderRef || 'BF-SHP-MANIFEST_8902AA'}</p>
                   </div>
-                  <span className="rounded-full bg-black text-white text-[8px] font-bold px-2 py-0.5 h-fit select-none">
-                    TLS-SECURE
+                  <span className="rounded-full bg-green-600 text-white text-[8px] font-bold px-2 py-0.5 h-fit select-none">
+                    PAID
                   </span>
                 </div>
               </div>

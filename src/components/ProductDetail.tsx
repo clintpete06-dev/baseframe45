@@ -7,6 +7,7 @@ import React, { useState, useRef } from 'react';
 import { Star, ShoppingBag, CreditCard, Check, ShieldCheck, Truck, Sparkles, Heart } from 'lucide-react';
 import { Product, Review } from '../types';
 import { PRODUCTS } from '../data/products';
+import ProductVideo from './ProductVideo';
 
 interface ProductDetailProps {
   product: Product;
@@ -154,6 +155,8 @@ export default function ProductDetail({
               </button>
             ))}
           </div>
+
+          <ProductVideo productId={product._id} />
         </div>
 
         {/* Content Column */}
