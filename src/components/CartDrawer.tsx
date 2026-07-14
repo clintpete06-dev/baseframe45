@@ -5,12 +5,21 @@
 
 import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus, ShoppingBag, CreditCard, ShieldCheck, Ticket, Sparkles, AlertCircle } from 'lucide-react';
-import { CartItem } from '../types';
+import { Product } from '../types';
+
+type CartEntry = {
+  _id: string;
+  productId: string;
+  selectedSize: number;
+  selectedColor: string;
+  quantity: number;
+  product: Product | null;
+};
 
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  cart: CartItem[];
+  cart: CartEntry[];
   onUpdateQty: (id: string, qty: number) => void;
   onRemoveItem: (id: string) => void;
   onClearCart: () => void;
@@ -45,7 +54,7 @@ export default function CartDrawer({
   if (!isOpen) return null;
 
   // Calculative Values
-  const subtotalSum = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+  const subtotalSum = cart.reduce((acc, item) => acc + (item.product?.price ?? 0) * item.quantity, 0);
   const discountSum = Math.round(subtotalSum * (discountPercent / 100));
   const shippingCost = subtotalSum > 500 ? 0 : 25; // Free premium air transport over $500
   const finalTotalSum = subtotalSum - discountSum + shippingCost;
@@ -149,21 +158,21 @@ export default function CartDrawer({
                   <div className="space-y-4">
                     {cart.map((item) => (
                       <div
-                        key={item.id}
+                        key={item._id}
                         className="flex items-center gap-4 p-3.5 rounded-2xl border border-luxury-gray-150 bg-luxury-gray-50/20"
                       >
                         <img
-                          src={item.product.images[0]}
-                          alt={item.product.name}
+                          src={item.product?.images?.[0] ?? ''}
+                          alt={item.product?.name ?? ''}
                           className="h-16 w-16 rounded-xl object-cover border border-luxury-gray-200 bg-white"
                         />
                         
                         <div className="flex-1 overflow-hidden">
                           <span className="text-[9px] font-bold text-luxury-gray-400 uppercase font-mono tracking-wider">
-                            {item.product.brand}
+                            {item.product?.brand}
                           </span>
                           <h4 className="text-xs font-serif-luxury font-semibold text-black leading-tight truncate">
-                            {item.product.name}
+                            {item.product?.name}
                           </h4>
                           <p className="text-[10px] text-luxury-gray-500 font-mono mt-0.5">
                             US {item.selectedSize} • {item.selectedColor}
@@ -172,12 +181,12 @@ export default function CartDrawer({
 
                         {/* Adjusters and price sum column */}
                         <div className="flex flex-col items-end gap-2.5">
-                          <span className="mono-premium text-xs font-bold text-black">${item.product.price * item.quantity}</span>
+                          <span className="mono-premium text-xs font-bold text-black">${(item.product?.price ?? 0) * item.quantity}</span>
                           
                           <div className="flex items-center gap-2">
                             <div className="flex h-7 items-center rounded-lg border border-luxury-gray-200 bg-white overflow-hidden">
                               <button
-                                onClick={() => onUpdateQty(item.id, item.quantity - 1)}
+                                onClick={() => onUpdateQty(item._id, item.quantity - 1)}
                                 className="px-2 h-full text-luxury-gray-500 hover:bg-luxury-gray-100 hover:text-black"
                                 title="Subtract"
                               >
@@ -185,7 +194,7 @@ export default function CartDrawer({
                               </button>
                               <span className="px-2.5 text-xs font-mono font-bold text-black">{item.quantity}</span>
                               <button
-                                onClick={() => onUpdateQty(item.id, item.quantity + 1)}
+                                onClick={() => onUpdateQty(item._id, item.quantity + 1)}
                                 className="px-2 h-full text-luxury-gray-500 hover:bg-luxury-gray-100 hover:text-black"
                                 title="Add"
                               >
@@ -194,7 +203,7 @@ export default function CartDrawer({
                             </div>
 
                             <button
-                              onClick={() => onRemoveItem(item.id)}
+                              onClick={() => onRemoveItem(item._id)}
                               className="text-luxury-gray-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-red-50"
                               title="Discard"
                             >

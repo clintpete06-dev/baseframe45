@@ -8,10 +8,19 @@ import { Search, ShoppingBag, User, Heart, Menu, X, ArrowRight, ShieldCheck, Spa
 import { Product, CartItem } from '../types';
 import { PRODUCTS } from '../data/products';
 
+type CartEntry = {
+  _id: string;
+  productId: string;
+  selectedSize: number;
+  selectedColor: string;
+  quantity: number;
+  product: Product | null;
+};
+
 interface HeaderProps {
   currentPath: string;
   onNavigate: (path: string) => void;
-  cart: CartItem[];
+  cart: CartEntry[];
   wishlist: string[];
   onOpenCart: () => void;
   onOpenAuth: () => void;
